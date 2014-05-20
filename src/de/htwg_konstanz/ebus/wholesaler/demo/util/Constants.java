@@ -68,9 +68,6 @@ public class Constants {
 
 	public static final String PARAM_SEARCH_STRING = "searchString";
 
-	// siehe export.jsp
-	// marco
-
 	public static final String PARAM_NAME_TYPE = "fileType";
 
 	public static final String PARAM_FILE_TYPE_VALUE_XML = "BMECat";
@@ -83,13 +80,10 @@ public class Constants {
 		bmecat, xhtml;
 
 		public static ExportFormat getExportFormat(String value) {
-			if (getExportFormat(value) == bmecat) {
-				return ExportFormat.bmecat;
-			} else {
-				return ExportFormat.xhtml;
-			}
+			return ExportFormat.bmecat;
 
 		}
 
 	}
+
 }
