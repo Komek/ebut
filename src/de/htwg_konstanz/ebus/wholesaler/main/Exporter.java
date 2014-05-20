@@ -59,7 +59,7 @@ public class Exporter {
 		properties = new Properties();
 		initProperties();
 
-		if ((shortDescription == null)) {
+		if (shortDescription.equals("") || shortDescription.equals(null)) {
 			boProducts = productBOA.findAll();
 		} else {
 			boProducts = productBOA.findByCriteriaLike(
@@ -96,13 +96,13 @@ public class Exporter {
 	 * @return File
 	 */
 	public File export() {
-		Document doc = getExportDocument();
+		Document doc = createBMEcatDoc();
 		File result = null;
-
+		// test ob doc werte enthält
 		try {
 			switch (format) {
 			case bmecat:
-				result = getBMECat(doc);
+				result = createBMEcatFile(doc);
 				break;
 			case xhtml:
 				File pk = getDocumentAsProduktkatalog(doc);
@@ -137,7 +137,8 @@ public class Exporter {
 	 * @return File
 	 * @throws TransformerException
 	 */
-	private File getBMECat(Document document) throws TransformerException {
+	private File createBMEcatFile(Document document)
+			throws TransformerException {
 		DOMSource source = new DOMSource(document);
 		File file = new File(Constants.BMECAT_FILENAME);
 		StreamResult result = new StreamResult(file);
@@ -181,7 +182,7 @@ public class Exporter {
 	 * 
 	 * @return document
 	 */
-	private Document getExportDocument() {
+	private Document createBMEcatDoc() {
 		DocumentBuilder builder;
 		Document document = null;
 
@@ -198,8 +199,8 @@ public class Exporter {
 					"http://www.w3.org/2001/XMLSchema-instance");
 
 			// create BMECAT HEADER
-			rootElement.appendChild(getBmecatHeader(document));
-			rootElement.appendChild(getBmecatBody(document));
+			rootElement.appendChild(createHeader(document));
+			rootElement.appendChild(createBody(document));
 
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
@@ -215,13 +216,13 @@ public class Exporter {
 	 * @param document
 	 * @return Node
 	 */
-	private Node getBmecatHeader(Document document) {
+	private Node createHeader(Document document) {
 		// Preconditions.checkNotNull(document);
 
 		String lang = "deu";
 		String version = "1.0";
 		String name = "EBUT Catalog 2014";
-		String id = "A123";
+		String id = "Tandem2";
 
 		Element header = document.createElement(Constants.ELEMENT_HEADER);
 		Element catalog = document.createElement(Constants.ELEMENT_CATALOG);
@@ -246,7 +247,7 @@ public class Exporter {
 
 		Element supplier = document.createElement(Constants.ELEMENT_SUPPLIER);
 		Element supplierName = document.createElement(Constants.SUPPLIER_NAME);
-		supplierName.appendChild(document.createTextNode(" "));
+		supplierName.appendChild(document.createTextNode("Tandem2SuperShop"));
 		supplier.appendChild(supplierName);
 		header.appendChild(supplier);
 
@@ -259,8 +260,7 @@ public class Exporter {
 	 * @param document
 	 * @return Node
 	 */
-	private Node getBmecatBody(Document document) {
-		// Preconditions.checkNotNull(document);
+	private Node createBody(Document document) {
 		Element tNewCatalog = document
 				.createElement(Constants.ELEMENT_TNEWCATALOG);
 		if (boProducts.isEmpty()) {
@@ -275,13 +275,13 @@ public class Exporter {
 				supplierElement.appendChild(document
 						.createTextNode(supplierNumber));
 
-				Node articleDetailsElement = getArticleDetailsElement(document,
+				Node articleDetailsElement = createArticleDetails(document,
 						boProduct);
 
-				Node articleOrderElement = getArticleOrderDetails(document,
+				Node articleOrderElement = createArticleOrderDetails(document,
 						boProduct);
 
-				Node articlePriceDetails = getArticlePriceDetails(document,
+				Node articlePriceDetails = createArticlePriceDetails(document,
 						boProduct);
 
 				articleElement.appendChild(supplierElement);
@@ -302,7 +302,7 @@ public class Exporter {
 	 * @param boProduct
 	 * @return Node
 	 */
-	private Node getArticleDetailsElement(Document document, BOProduct boProduct) {
+	private Node createArticleDetails(Document document, BOProduct boProduct) {
 		String shortDescriptionCustomer = boProduct
 				.getShortDescriptionCustomer();
 		String longDescriptionCustomer = boProduct.getLongDescriptionCustomer();
@@ -331,7 +331,8 @@ public class Exporter {
 	 * @param boProduct
 	 * @return Node
 	 */
-	private Node getArticlePriceDetails(Document document, BOProduct boProduct) {
+	private Node createArticlePriceDetails(Document document,
+			BOProduct boProduct) {
 		List<BOSalesPrice> salesPrices = boProduct.getSalesPrices();
 
 		Element articlePriceDetailsElement = document
@@ -339,23 +340,23 @@ public class Exporter {
 		for (BOSalesPrice boSalesPrice : salesPrices) {
 			Element articlePriceElement = document
 					.createElement(Constants.ARTICLE_PRICE);
-			Element priceAmountElement = document
-					.createElement(Constants.PRICE_AMOUNT);
-			Element priceCurrencyElement = document
-					.createElement(Constants.PRICE_CURRENCY);
-			Element taxElement = document.createElement(Constants.TAX);
-			Element territoryElement = document
-					.createElement(Constants.TERRITORY);
-
 			articlePriceElement.setAttribute("price_type",
 					boSalesPrice.getPricetype());
+			Element priceAmountElement = document
+					.createElement(Constants.PRICE_AMOUNT);
 			priceAmountElement.appendChild(document.createTextNode(boSalesPrice
 					.getAmount().toString()));
+			Element priceCurrencyElement = document
+					.createElement(Constants.PRICE_CURRENCY);
 			priceCurrencyElement.appendChild(document
 					.createTextNode(boSalesPrice.getCountry().getCurrency()
 							.getCode()));
+			Element taxElement = document.createElement(Constants.TAX);
 			taxElement.appendChild(document.createTextNode(boSalesPrice
 					.getTaxrate().toString()));
+
+			Element territoryElement = document
+					.createElement(Constants.TERRITORY);
 			territoryElement.appendChild(document.createTextNode(boSalesPrice
 					.getCountry().getIsocode()));
 
@@ -377,7 +378,8 @@ public class Exporter {
 	 * @param boProduct
 	 * @return Node
 	 */
-	private Node getArticleOrderDetails(Document document, BOProduct boProduct) {
+	private Node createArticleOrderDetails(Document document,
+			BOProduct boProduct) {
 		Element articleOrderDetailsElement = document
 				.createElement(Constants.ARTICLE_ORDER_DETAILS);
 		Element orderUnitElement = document.createElement(Constants.ORDER_UNIT);
@@ -387,8 +389,8 @@ public class Exporter {
 				.createElement(Constants.NO_CU_PER_OU);
 
 		orderUnitElement.appendChild(document.createTextNode("C62"));
-		contentUnitPerOderUnitElement.appendChild(document.createTextNode("1"));
 		contentUnitElement.appendChild(document.createTextNode("04"));
+		contentUnitPerOderUnitElement.appendChild(document.createTextNode("1"));
 
 		articleOrderDetailsElement.appendChild(orderUnitElement);
 		articleOrderDetailsElement.appendChild(contentUnitElement);

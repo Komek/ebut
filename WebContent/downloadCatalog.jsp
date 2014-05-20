@@ -45,8 +45,8 @@
 			ServletOutputStream outputStream = response.getOutputStream();
 			//InputStream inputStream = Files.newInputStreamSupplier(exportFile).getInput();
 			
-			// write file content to servlet outputstream
-			//Files.copy(exportFile, outputStream);
+			 //write file content to servlet outputstream
+			Files.copy(exportFile, outputStream);
 			
 			outputStream.flush();
 			outputStream.close();

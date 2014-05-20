@@ -20,15 +20,18 @@ public class DownloadAction implements IAction {
 	@Override
 	public String execute(HttpServletRequest request,
 			HttpServletResponse response, ArrayList<String> errorList) {
-		final String sourceMethod = "execute";
 		String nextPage = "downloadCatalog.jsp";
 
-		log.entering(getClass().getName(), sourceMethod);
-
+		// get the login bean from the session
 		LoginBean loginBean = (LoginBean) request.getSession().getAttribute(
 				Constants.PARAM_LOGIN_BEAN);
-		if (loginBean.isLoggedIn()) {
-
+		// ensure that the user is logged in
+		if (loginBean.isLoggedIn() && loginBean != null) {
+			// ensure that the user is allowed to execute this action
+			// (authorization)
+			// at this time the authorization is not fully implemented.
+			// -> use the "Security.RESOURCE_ALL" constant which includes all
+			// resources.
 			String shortDescription = request
 					.getParameter(Constants.PARAM_SEARCH_STRING);
 
