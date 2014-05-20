@@ -1,0 +1,1 @@
+insert into supplier (suppliernumber, companyname, firstname, lastname, address) values (30, "KN MEDIA STORE", "Max", "Mustermann", 30);
