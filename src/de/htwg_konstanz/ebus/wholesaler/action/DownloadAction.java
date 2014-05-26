@@ -39,9 +39,6 @@ public class DownloadAction implements IAction {
 					.getExportFormat(request
 							.getParameter(Constants.PARAM_FILE_TYPE));
 
-			System.err
-					.println(fileType
-							+ "-------------------------------------------------------------------------");
 			Exporter exporter = new Exporter(shortDescription, fileType);
 			File exportFile = exporter.export();
 

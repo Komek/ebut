@@ -169,7 +169,7 @@ public class Import {
 			// TODO Link realtiv machen!
 			bmeCatSchema = schemaFactory
 					.newSchema(new File(
-							"D:/EBUT/EBUT-Lab-Teil3-Tandem-02/Programm/files/bmecat_new_catalog_1_2_simple_without_NS.xsd"));
+							"D:/EBUT/EBUT-Lab-Teil3-Tandem-02/Wholesaler/files/bmecat_new_catalog_1_2_simple_without_NS.xsd"));
 			validator = bmeCatSchema.newValidator();
 		} catch (SAXException e) {
 			log.warning("No Schema found!");

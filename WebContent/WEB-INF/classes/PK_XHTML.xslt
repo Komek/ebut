@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--<!DOCTYPE xsl:stylesheet SYSTEM "Schemata/Aufgabe1_DTD.dtd" > -->
+<?altova_samplexml BspDatei.xml?>
 <xsl:stylesheet version="1.0"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="Schemata/Aufgabe1_XMLSchema.xsd">
 	<xsl:output method="html" version="4.0" indent="yes"
 		encoding="UTF-8" doctype-public="-//W3C//DTD XHTML 1.1//EN"
 		doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd" />
@@ -37,16 +40,16 @@
 			<p>
 				<label>Article No: </label>
 				<xsl:value-of select="@Artikelnummer" />
-				<br/>
+				<br />
 				<label>Description: </label>
 				<xsl:value-of select="Kurzbeschreibung" />
-				<br/>
+				<br />
 				<label>Long description: </label>
 				<xsl:apply-templates select="Langbeschreibung" />
-				<br/>
+				<br />
 				<xsl:apply-templates select="Nettopreise | Bruttopreise" />
 			</p>
-			<hr/>
+			<hr />
 		</li>
 	</xsl:template>
 	<!-- Langbeschreibung allgemein -->
