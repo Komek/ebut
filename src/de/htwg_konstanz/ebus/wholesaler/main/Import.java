@@ -220,32 +220,35 @@ public class Import {
 	/**
 	 * Parses a file and imports the files products into the store database.
 	 * 
-	 * @param fInputStreamile
+	 * @param InputStream
 	 *            The file inputstream from which the products are imported
 	 * @throws DocumentNotValidException
 	 *             Throws this exception if the document created from the file
 	 *             is not valid to the catalog XSD.
 	 */
-	public void uploadFile(InputStream file) throws DocumentNotValidException {
+	public String uploadFile(InputStream file) throws DocumentNotValidException {
 		log.entering(CLASS_NAME, "uploadFile");
+		String ret = "";
 		org.w3c.dom.Document document = this.createDocumentFromFile(file);
 
 		if (document == null) {
-			log.warning("Document is null");
-			throw new DocumentNotValidException(
-					"Parsed document is null. Please check your XML File!");
+			ret = "Your XML could not be parsed because it is not well-formed. Please check your XML!";
+			log.warning(ret);
+			throw new DocumentNotValidException(ret);
 		} else {
 			this.validateDoc(document);
 			this.supplier = this.getSupplier(document);
 			if (this.supplier != null) {
 				this.importArticles(document);
+				ret = "Upload or update successfull!";
 			} else {
-				log.warning("Cannot Import Document, no such supplier in Database!");
-				throw new DocumentNotValidException(
-						"Cannot Import Document, no such supplier in Database!");
+				ret = "Cannot Import Document, no such supplier in Database!";
+				log.warning(ret);
+				throw new DocumentNotValidException(ret);
 			}
 		}
 		log.exiting(CLASS_NAME, "uploadFile");
+		return ret;
 	}
 
 	/**
