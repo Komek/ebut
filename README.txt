@@ -1,2 +1,2 @@
 insert into supplier (suppliernumber, companyname, firstname, lastname, address) values (30, "KN MEDIA STORE", "Max", "Mustermann", 30);
-insert into supplier (suppliernumber, companyname, firstname, lastname, address) values (40, "Tandproductem2SuperShop", "Max", "Mustermann", 40);
+insert into supplier (suppliernumber, companyname, firstname, lastname, address) values (40, "Tandem2SuperShop", "Max", "Mustermann", 40);

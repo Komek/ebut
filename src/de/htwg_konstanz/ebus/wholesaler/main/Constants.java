@@ -39,8 +39,8 @@ public class Constants {
 			.valueOf(1.5);
 
 	public static final String SEARCHSTRING_DESCRIPTION_SHORT = "Shortdescription";
-	public static final String PATH_TO_BMECAT_PK = "D:\\EBUT\\EBUT-Lab-Teil3-Tandem-02\\Wholesaler\\files\\BmeCat_PK.xslt";
-	public static final String PATH_TO_PK_XHTML = "D:\\EBUT\\EBUT-Lab-Teil3-Tandem-02\\Wholesaler\\files\\PK_XHTML.xslt";
+	public static final String PATH_TO_BMECAT_PK = "D:\\BmeCat_PK.xslt";
+	public static final String PATH_TO_PK_XHTML = "D:\\PK_XHTML.xslt";
 	public static final String BMECAT_FILENAME = "Productcatalog_BMECat.xml";
 	public static final String PK_FILENAME = "PK.xml";
 	public static final String XHTML_FILENAME = "Productcatalog.html";

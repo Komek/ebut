@@ -47,12 +47,12 @@ public class Exporter {
 	private final ExportFormat format;
 
 	/**
-	 * transformer properties, transformers and product list
+	 * initialize transformer properties, transformers and product list
 	 * 
 	 * @param shortDescription
-	 *            - all products if empty String
+	 *            - search string, optional. returns all products if empty
 	 * @param format
-	 *            - format of export file: BMECat or XHTML
+	 *            - format of export file
 	 */
 	public Exporter(String shortDescription, ExportFormat format) {
 		this.format = format;
@@ -91,14 +91,14 @@ public class Exporter {
 	}
 
 	/**
-	 * choose product catalog to BMECat or to XHTML
+	 * returns product catalog as BMECat or as XHTML
 	 * 
 	 * @return File
 	 */
 	public File export() {
 		Document doc = createBMEcatDoc();
 		File result = null;
-		// test ob doc werte enthält
+
 		try {
 			switch (format) {
 			case bmecat:
@@ -120,7 +120,7 @@ public class Exporter {
 	}
 
 	/**
-	 * properties for transformers
+	 * initialize properties for transformers
 	 */
 	private void initProperties() {
 		/* Transformer Properties */
@@ -131,7 +131,7 @@ public class Exporter {
 	}
 
 	/**
-	 * product catalog as BMECat
+	 * returns product catalog as BMECat
 	 * 
 	 * @param document
 	 * @return File
@@ -147,7 +147,7 @@ public class Exporter {
 	}
 
 	/**
-	 * product catalog 'Produktkatalog'
+	 * returns product catalog as 'Produktkatalog'
 	 * 
 	 * @param document
 	 * @return File
@@ -163,7 +163,7 @@ public class Exporter {
 	}
 
 	/**
-	 * product catalog as HTML
+	 * returns product catalog as HTML
 	 * 
 	 * @param document
 	 * @return File
@@ -178,7 +178,10 @@ public class Exporter {
 	}
 
 	/**
-	 * get DOM
+	 * get and create DOM 
+	 * create root Element with attributes 
+	 * create BMECAT
+	 * Header
 	 * 
 	 * @return document
 	 */
@@ -211,7 +214,7 @@ public class Exporter {
 	}
 
 	/**
-	 * BmeCat Header elements
+	 * create and get BmeCat Header elements
 	 * 
 	 * @param document
 	 * @return Node
@@ -255,7 +258,7 @@ public class Exporter {
 	}
 
 	/**
-	 * BmeCat body elements
+	 * create and get BmeCat body elements
 	 * 
 	 * @param document
 	 * @return Node
@@ -296,7 +299,7 @@ public class Exporter {
 	}
 
 	/**
-	 * BMECat article details elements
+	 * create and get BMECat article details elements
 	 * 
 	 * @param document
 	 * @param boProduct
@@ -372,7 +375,7 @@ public class Exporter {
 	}
 
 	/**
-	 * article order details product
+	 * create and get article order details product
 	 * 
 	 * @param document
 	 * @param boProduct
