@@ -83,8 +83,9 @@ public class UploadAction implements IAction {
 							// Process form file field (input type="file").
 							InputStream filecontent = item.getInputStream();
 							try {
-								new Import().uploadFile(filecontent);
-								errorList.add("Upload successful!");
+								// Call Importfunction
+								errorList.add(new Import()
+										.uploadFile(filecontent));
 								filecontent.close();
 							} catch (DocumentNotValidException e) {
 								errorList.add(e.getMessage());
@@ -94,11 +95,13 @@ public class UploadAction implements IAction {
 						}
 					}
 				} catch (FileUploadException e) {
-					errorList.add("Your upload failed");
+					errorList
+							.add("Your upload failed, please contact your admin :)");
 					e.printStackTrace();
 					nextPage = "upload.jsp";
 				} catch (IOException e) {
-					errorList.add("Your upload failed");
+					errorList
+							.add("Your upload failed, please contact your admin :)");
 					e.printStackTrace();
 					nextPage = "upload.jsp";
 				}

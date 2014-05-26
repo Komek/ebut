@@ -15,15 +15,12 @@
 
 <script>
    function validate(){
-	   
 	   if (document.getElementById('file').value !== '') {
 	         document.getElementById('upload-form').submit();
 	      }   
 	      else {
 	         alert('No File Attached, please select you catalog xml file!');
 	      }
-
-
  }
 </script>
 
