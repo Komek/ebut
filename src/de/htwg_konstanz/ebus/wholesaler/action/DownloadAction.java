@@ -1,11 +1,14 @@
 package de.htwg_konstanz.ebus.wholesaler.action;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 import de.htwg_konstanz.ebus.wholesaler.demo.IAction;
 import de.htwg_konstanz.ebus.wholesaler.demo.LoginBean;
@@ -15,7 +18,7 @@ import de.htwg_konstanz.ebus.wholesaler.main.Exporter;
 
 public class DownloadAction implements IAction {
 
-	private final Logger log = Logger.getLogger(getClass().getName());
+	// private final Logger log = Logger.getLogger(getClass().getName());
 
 	@Override
 	public String execute(HttpServletRequest request,
@@ -40,7 +43,19 @@ public class DownloadAction implements IAction {
 							.getParameter(Constants.PARAM_FILE_TYPE));
 
 			Exporter exporter = new Exporter(shortDescription, fileType);
-			File exportFile = exporter.export();
+			File exportFile = null;
+			try {
+				exportFile = exporter.export();
+			} catch (SAXException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ParserConfigurationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 			request.getSession(true).setAttribute("exportfile", exportFile);
 
