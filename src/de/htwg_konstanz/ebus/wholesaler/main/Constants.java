@@ -38,8 +38,11 @@ public class Constants {
 	public static final BigDecimal SALESPRICE_MULTIPLIER = BigDecimal
 			.valueOf(1.5);
 	public static final String SEARCHSTRING_DESCRIPTION_SHORT = "Shortdescription";
-	public static final String PATH_TO_BMECAT_PK = "files/BmeCat_PK.xslt";
-	public static final String PATH_TO_PK_XHTML = "files/PK_XHTML.xslt";
+
+	public static final String PATH_TO_BMECAT_PK = "D:\\EBUT\\EBUT-Lab-Teil3-Tandem-02\\Wholesaler\\files\\BmeCat_XHTML.xslt";
+	public static final String PATH_TO_PK_XHTML = "D:\\EBUT\\EBUT-Lab-Teil3-Tandem-02\\Wholesaler\\files\\PK_XHTML.xslt";
+	public static final String PATH_TO_BMEcatXSD = "D:\\EBUT\\EBUT-Lab-Teil3-Tandem-02\\Wholesaler\\files\\bmecat_new_catalog_1_2_simple_without_NS.xsd";
+
 	public static final String BMECAT_FILENAME = "Productcatalog_BMECat.xml";
 	public static final String PK_FILENAME = "PK.xml";
 	public static final String XHTML_FILENAME = "Productcatalog.html";

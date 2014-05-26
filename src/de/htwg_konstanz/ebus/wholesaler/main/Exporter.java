@@ -3,10 +3,12 @@ package de.htwg_konstanz.ebus.wholesaler.main;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Properties;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -36,11 +38,11 @@ public class Exporter {
 			.newInstance();
 
 	private final ProductBOA productBOA = ProductBOA.getInstance();
-	private final TransformerFactory decepticons = TransformerFactory
+	private final TransformerFactory transormfactory = TransformerFactory
 			.newInstance();
 	private Transformer transformerBMECat;
 	private Transformer transformerXHTML;
-	// private final Properties properties;
+	private final Properties properties;
 	private List<BOProduct> boProducts;
 	private ExportFormat format;
 
@@ -54,6 +56,8 @@ public class Exporter {
 	 */
 	public Exporter(String shortDescription, ExportFormat format) {
 		this.format = format;
+		properties = new Properties();
+		initProperties();
 		if (shortDescription.equals("") || shortDescription.equals(null)) {
 			boProducts = productBOA.findAll();
 		} else {
@@ -65,22 +69,24 @@ public class Exporter {
 		try {
 			switch (format) {
 			case bmecat:
-				transformerBMECat = decepticons.newTransformer();
-				transformerBMECat = decepticons
+				transformerBMECat = transormfactory
 						.newTransformer(new StreamSource(
 								Constants.PATH_TO_BMECAT_PK));
 				break;
 			case xhtml:
-				transformerXHTML = decepticons.newTransformer();
-				transformerXHTML = decepticons.newTransformer(new StreamSource(
-						Constants.PATH_TO_PK_XHTML));
-				// transformerXHTML.setOutputProperties(properties);
+				transformerBMECat = transormfactory
+						.newTransformer(new StreamSource(
+								Constants.PATH_TO_BMECAT_PK));
+				transformerXHTML = transormfactory
+						.newTransformer(new StreamSource(
+								Constants.PATH_TO_PK_XHTML));
+				transformerXHTML.setOutputProperties(properties);
 				break;
 			default:
 				break;
 			}
 
-			// transformerBMECat.setOutputProperties(properties);
+			transformerBMECat.setOutputProperties(properties);
 		} catch (TransformerConfigurationException e) {
 			e.printStackTrace();
 		}
@@ -104,9 +110,8 @@ public class Exporter {
 				result = createBMEcatFile(doc);
 				break;
 			case xhtml:
-				// File pk = getDocumentAsProduktkatalog(doc);
-				// result = getPK_HTML(factory.newDocumentBuilder().parse(pk));
-				result = createXHTMLcatFile(doc);
+				File pk = getDocumentAsProduktkatalog(doc);
+				result = getPK_HTML(factory.newDocumentBuilder().parse(pk));
 				break;
 			default:
 				break;
@@ -121,22 +126,24 @@ public class Exporter {
 	/**
 	 * properties for transformers
 	 */
-	// private void initProperties() {
-	// /* Transformer Properties */
-	// properties.setProperty(OutputKeys.INDENT, "yes");
-	// properties.setProperty(OutputKeys.ENCODING, "iso-8859-1");
-	// properties
-	// .setProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-	// }
+	private void initProperties() {
+		/* Transformer Properties */
 
-	private File createXHTMLcatFile(Document doc) throws TransformerException {
-		DOMSource source = new DOMSource(doc);
-		File file = new File(Constants.BMECAT_FILENAME);
-		StreamResult result = new StreamResult(file);
-		transformerXHTML.transform(source, result);
-		return file;
-
+		properties.setProperty(OutputKeys.INDENT, "yes");
+		properties.setProperty(OutputKeys.ENCODING, "iso-8859-1");
+		properties
+				.setProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 	}
+
+	// private File createXHTMLcatFile(Document doc) throws TransformerException
+	// {
+	// DOMSource source = new DOMSource(doc);
+	// File file = new File(Constants.BMECAT_FILENAME);
+	// StreamResult result = new StreamResult(file);
+	// transformerXHTML.transform(source, result);
+	// return file;
+	//
+	// }
 
 	/**
 	 * returns product catalog as BMECat
@@ -161,14 +168,14 @@ public class Exporter {
 	 * @return File
 	 * @throws TransformerException
 	 */
-	// private File getDocumentAsProduktkatalog(Document document)
-	// throws TransformerException {
-	// DOMSource source = new DOMSource(document);
-	// File file = new File(Constants.PK_FILENAME);
-	// StreamResult result = new StreamResult(file);
-	// transformerBMECat.transform(source, result);
-	// return file;
-	// }
+	private File getDocumentAsProduktkatalog(Document document)
+			throws TransformerException {
+		DOMSource source = new DOMSource(document);
+		File file = new File(Constants.PK_FILENAME);
+		StreamResult result = new StreamResult(file);
+		transformerBMECat.transform(source, result);
+		return file;
+	}
 
 	/**
 	 * return product catalog as HTML
@@ -177,13 +184,13 @@ public class Exporter {
 	 * @return File
 	 * @throws TransformerException
 	 */
-	// private File getPK_HTML(Document document) throws TransformerException {
-	// DOMSource source = new DOMSource(document);
-	// File file = new File(Constants.XHTML_FILENAME);
-	// StreamResult result = new StreamResult(file);
-	// transformerXHTML.transform(source, result);
-	// return file;
-	// }
+	private File getPK_HTML(Document document) throws TransformerException {
+		DOMSource source = new DOMSource(document);
+		File file = new File(Constants.XHTML_FILENAME);
+		StreamResult result = new StreamResult(file);
+		transformerXHTML.transform(source, result);
+		return file;
+	}
 
 	/**
 	 * get DOM
