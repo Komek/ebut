@@ -80,7 +80,7 @@ public class Constants {
 		bmecat, xhtml;
 
 		public static ExportFormat getExportFormat(String value) {
-			return ExportFormat.bmecat;
+			return ExportFormat.valueOf(value.toLowerCase());
 
 		}
 
