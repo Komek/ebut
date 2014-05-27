@@ -64,17 +64,11 @@ public class Import {
 
 		if (existingProduct != null) {
 			log.info("Product is already existing!");
-			if (supplier.getSupplierNumber().equals(
-					existingProduct.getSupplier().getSupplierNumber())) {
-				log.info("Product is from the same supplier and will be updated!");
-				existingProduct.setLongDescription(null);
-				existingProduct.setLongDescriptionCustomer(null);
-				searchedProduct = existingProduct;
-			} else {
-				log.info("Product with No. " + orderNumber
-						+ " exists for another supplier!");
-				// TODO Throw exception
-			}
+
+			existingProduct.setLongDescription(null);
+			existingProduct.setLongDescriptionCustomer(null);
+			searchedProduct = existingProduct;
+
 		} else {
 			log.info("Product " + orderNumber
 					+ " does not exist. Will be created for store!");
@@ -84,6 +78,28 @@ public class Import {
 		}
 		return searchedProduct;
 	}
+
+	// if (existingProduct != null) {
+	// log.info("Product is already existing!");
+	// if (supplier.getSupplierNumber().equals(
+	// existingProduct.getSupplier().getSupplierNumber())) {
+	// log.info("Product is from the same supplier and will be updated!");
+	// existingProduct.setLongDescription(null);
+	// existingProduct.setLongDescriptionCustomer(null);
+	// searchedProduct = existingProduct;
+	// } else {
+	// log.info("Product with No. " + orderNumber + " exists for "
+	// + existingProduct.getSupplier().getCompanyname());
+	// // TODO Throw exception
+	// }
+	// } else {
+	// log.info("Product " + orderNumber
+	// + " does not exist. Will be created for store!");
+	// searchedProduct = new BOProduct();
+	// searchedProduct.setOrderNumberSupplier(orderNumber);
+	// searchedProduct.setOrderNumberCustomer(orderNumber);
+	// }
+	// return searchedProduct;
 
 	/**
 	 * Finds the supplier of the imported document and returns it.

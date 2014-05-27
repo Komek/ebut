@@ -3,14 +3,12 @@
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<xsl:output method="html" version="4.0" indent="yes"
-		encoding="UTF-8" doctype-public="-//W3C//DTD XHTML 1.1//EN"
+		encoding="iso-8859-1" doctype-public="-//W3C//DTD XHTML 1.1//EN"
 		doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd" />
 	<!-- allgemeines Template -->
 	<xsl:template match="/">
 		<html>
 			<head>
-				<!-- meta http-equiv="Content-Type" content="text/html; charset=UTF-8" 
-					/ -->
 				<title>Product catalog</title>
 			</head>
 			<body>
@@ -37,13 +35,13 @@
 			<p>
 				<label>Article No: </label>
 				<xsl:value-of select="@Artikelnummer" />
-				<br/>
+				<br></br>
 				<label>Description: </label>
 				<xsl:value-of select="Kurzbeschreibung" />
-				<br/>
+				<br></br>
 				<label>Long description: </label>
 				<xsl:apply-templates select="Langbeschreibung" />
-				<br/>
+				<br></br>
 				<xsl:apply-templates select="Nettopreise | Bruttopreise" />
 			</p>
 			<hr/>
