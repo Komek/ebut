@@ -38,7 +38,7 @@
 	</form>
 
 	<%
-		// if there is a 'exportfile' attribute, show download dialog
+		// is there  a 'exportfile' attribute
 		File exportFile = (File) session.getAttribute("exportfile");
 		if(exportFile != null){
 			/* set exportfile attribute to null again, otherwise it is saved until the end of time (or at least the end of session)*/

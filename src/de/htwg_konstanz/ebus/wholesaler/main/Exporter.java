@@ -22,6 +22,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
+import com.google.common.base.Preconditions;
+
 import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.BOProduct;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.BOSalesPrice;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.boa.ProductBOA;
@@ -59,6 +61,9 @@ public class Exporter {
 		properties = new Properties();
 		initProperties();
 
+		// if shortDescription is empty, it will returns all products
+		// all available products will be saved in a list, which returns from
+		// the "productBOA"
 		if (shortDescription.equals("") || shortDescription.equals(null)) {
 			boProducts = productBOA.findAll();
 		} else {
@@ -178,9 +183,7 @@ public class Exporter {
 	}
 
 	/**
-	 * get and create DOM 
-	 * create root Element with attributes 
-	 * create BMECAT
+	 * get and create DOM, create root Element with attributes and create BMECAT
 	 * Header
 	 * 
 	 * @return document
@@ -220,7 +223,7 @@ public class Exporter {
 	 * @return Node
 	 */
 	private Node createHeader(Document document) {
-		// Preconditions.checkNotNull(document);
+		Preconditions.checkNotNull(document);
 
 		String lang = "deu";
 		String version = "1.0";
