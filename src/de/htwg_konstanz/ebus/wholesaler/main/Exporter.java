@@ -40,7 +40,7 @@ public class Exporter {
 			.newInstance();
 
 	private final ProductBOA productBOA = ProductBOA.getInstance();
-	private final TransformerFactory decepticons = TransformerFactory
+	private final TransformerFactory deceptions = TransformerFactory
 			.newInstance();
 	private Transformer transformerBMECat;
 	private Transformer transformerXHTML;
@@ -75,13 +75,13 @@ public class Exporter {
 		try {
 			switch (format) {
 			case bmecat:
-				transformerBMECat = decepticons.newTransformer();
+				transformerBMECat = deceptions.newTransformer();
 				break;
 			case xhtml:
-				transformerBMECat = decepticons
+				transformerBMECat = deceptions
 						.newTransformer(new StreamSource(
 								Constants.PATH_TO_BMECAT_PK));
-				transformerXHTML = decepticons.newTransformer(new StreamSource(
+				transformerXHTML = deceptions.newTransformer(new StreamSource(
 						Constants.PATH_TO_PK_XHTML));
 				transformerXHTML.setOutputProperties(properties);
 				break;
