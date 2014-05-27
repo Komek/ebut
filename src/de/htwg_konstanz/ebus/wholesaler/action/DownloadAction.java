@@ -2,7 +2,6 @@ package de.htwg_konstanz.ebus.wholesaler.action;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +14,7 @@ import de.htwg_konstanz.ebus.wholesaler.main.Exporter;
 
 public class DownloadAction implements IAction {
 
-	private final Logger log = Logger.getLogger(getClass().getName());
+	// private final Logger log = Logger.getLogger(getClass().getName());
 
 	@Override
 	public String execute(HttpServletRequest request,
