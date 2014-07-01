@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://www.example.org/update_catalog_webservice/"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	name="update_catalog_webservice" targetNamespace="http://www.example.org/update_catalog_webservice/">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.example.org/update_catalog_webservice/">
+			<xsd:complexType name="priceType">
+				<xsd:sequence>
+					<xsd:element name="amount" type="xsd:decimal"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="currency" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="tax" type="xsd:decimal" minOccurs="1"
+						maxOccurs="1" />
+					<xsd:element name="pricetype" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="countryISOCode" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="lowerBound" type="xsd:integer"
+						minOccurs="1" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="authenticationType">
+				<xsd:sequence>
+					<xsd:element name="wholesalerName" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="wsUser" type="xsd:string" minOccurs="1"
+						maxOccurs="1" />
+					<xsd:element name="wsPassword" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="supplierProduct">
+				<xsd:sequence>
+					<xsd:element name="supplierAID" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="shortDescription" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="longDescription" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="price" type="tns:priceType"
+						minOccurs="1" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="listOfProductsType">
+				<xsd:sequence>
+					<xsd:element name="supplierProduct" type="tns:supplierProduct"
+						minOccurs="1" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="listOfUpdatedProductsType">
+				<xsd:sequence>
+					<xsd:element name="changedProducts" type="tns:supplierProduct"
+						minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="listOfUnavaiableProductsType">
+				<xsd:sequence>
+					<xsd:element name="supplierProduct" type="tns:supplierProduct"
+						minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="authenticationFaultElement" type="xsd:string" />
+
+
+			<xsd:element name="updateRequest" type="tns:updateRequestType" />
+			<xsd:complexType name="updateRequestType">
+				<xsd:sequence>
+					<xsd:element name="authentication" type="tns:authenticationType" />
+					<xsd:element name="listOfProducts" type="tns:listOfProductsType" />
+				</xsd:sequence>
+			</xsd:complexType>
+
+
+
+			<xsd:element name="updateResponse" type="tns:updateResponseType" />
+			<xsd:complexType name="updateResponseType">
+				<xsd:sequence>
+					<xsd:element name="updateDate" type="xsd:date"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="listOfUpdatedProducts" type="tns:listOfUpdatedProductsType"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="listOfUnavaiableProducts" type="tns:listOfUnavaiableProductsType"
+						minOccurs="1" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="authenticationFaultMessage">
+		<wsdl:part name="authenticationFaultPart" element="tns:authenticationFaultElement" />
+	</wsdl:message>
+	<wsdl:message name="updateRequest">
+		<wsdl:part name="updateRequestPart" element="tns:updateRequest" />
+	</wsdl:message>
+	<wsdl:message name="updateResponse">
+		<wsdl:part name="updateResponsePart" element="tns:updateResponse" />
+	</wsdl:message>
+	<wsdl:portType name="updateProductInterface">
+		<wsdl:operation name="updateCatalog">
+			<wsdl:input message="tns:updateRequest" />
+			<wsdl:output message="tns:updateResponse" />
+			<wsdl:fault name="authenticationFault" message="tns:authenticationFaultMessage" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="updateCatalogBinding" type="tns:updateProductInterface">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="updateCatalog">
+			<soap:operation
+				soapAction="http://www.example.org/update_catalog_webservice/updateCatalog" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="authenticationFault">
+				<soap:fault name="authenticationFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="update_catalog_webservice">
+		<wsdl:port name="update_catalog_webserviceSOAP" binding="tns:updateCatalogBinding">
+			<soap:address location="http://localhost:8080/WholesalerWebDemo/ws/" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
