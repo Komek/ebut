@@ -21,9 +21,8 @@
 		<form method="post" action="controllerservlet">
 		<input type="hidden" name="action" value="showUpdates">
 			<div>
-				<select name="<%=Constants.PARAM_SUPPLIER%>">
+		<select name="<%=Constants.PARAM_SUPPLIER%>">
 					<c:forEach var="supplier" items="${sessionScope.supplierList}">
-					
 						<jsp:useBean id="supplier"
 							type="de.htwg_konstanz.ebus.framework.wholesaler.api.bo.BOSupplier" />
 						<option value="<%=supplier.getSupplierNumber()%>"><%=supplier.getCompanyname()%></option>

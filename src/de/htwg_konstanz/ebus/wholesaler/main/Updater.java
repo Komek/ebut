@@ -38,12 +38,12 @@ public class Updater {
 				.getListOfProducts(productsOfSupplier);
 
 		// Create Update Request
-		UpdateRequestType updateRequest = factory
-				.createUpdateRequestType();
+		UpdateRequestType updateRequest = factory.createUpdateRequestType();
 		updateRequest.setListOfProducts(listOfProducts);
 
 		// Do request
 		try {
+
 			response = new UpdateCatalogWebservice()
 					.getUpdateCatalogWebserviceSOAP().updateCatalog(
 							updateRequest);

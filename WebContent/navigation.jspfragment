@@ -11,7 +11,7 @@
 <a href="<%= response.encodeURL("controllerservlet?action=showOrderList") %>"><img alt="Orders" title="Orders" border="0" src="images/buttons/order.png">&nbsp;Orders</a>&nbsp;&nbsp;
 <a href="<%= response.encodeURL("upload.jsp") %>"><img alt="Import" title="Import" border="0" src="images/buttons/import.png">&nbsp;Import</a>&nbsp;&nbsp;
 <a href="<%= response.encodeURL("controllerservlet?action=ShowSupplierListUpdate") %>"><img alt="Export" title="Export" border="0" src="images/buttons/export.png">&nbsp;Export</a>&nbsp;&nbsp;
-<a href="<%= response.encodeURL("updater_selectSupplier.jsp") %>"><img alt="Article Updater" title="Article Updater" border="0" src="images/buttons/refresh.png">&nbsp;Article Updater</a>&nbsp;&nbsp;
+<a href="<%= response.encodeURL("controllerservlet?action=ShowSupplierListUpdate") %>"><img alt="Article Updater" title="Article Updater" border="0" src="images/buttons/refresh.png">&nbsp;Article Updater</a>&nbsp;&nbsp;
 
 <% }
    else if(loginBean.getRole() == Constants.USER_CUSTOMER)

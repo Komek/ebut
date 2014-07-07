@@ -47,6 +47,8 @@ public class Constants {
 	public static final String PARAM_ORDER_CUSTOMER_LIST = "orderCustomerList";
 	public static final String PARAM_ORDER_PURCHASE_LIST = "orderPurchaseList";
 
+	public static final String PARAM_SUPPLIER_LIST = "supplierList";
+
 	public static final String PARAM_LOGIN_BEAN = "loginBean";
 	public static final String PARAM_NAME_ORDER_ID = "orderId";
 	public static final String PARAM_ORDER = "order";

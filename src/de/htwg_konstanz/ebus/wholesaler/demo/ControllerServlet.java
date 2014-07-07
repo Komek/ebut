@@ -82,9 +82,8 @@ public class ControllerServlet extends HttpServlet {
 				"de.htwg_konstanz.ebus.wholesaler.demo", IAction.class);
 		actionList.addAll((ArrayList<IAction>) ClassFinderUtil.findAll(
 				"de.htwg_konstanz.ebus.wholesaler.action", IAction.class));
-		
-		}
-	
+
+	}
 
 	/**
 	 * Process a HTTP Get request. The process is delegated to the method

@@ -122,7 +122,7 @@
 	</wsdl:binding>
 	<wsdl:service name="update_catalog_webservice">
 		<wsdl:port name="update_catalog_webserviceSOAP" binding="tns:updateCatalogBinding">
-			<soap:address location="http://localhost:8080/WholesalerWebDemo/ws" />
+			<soap:address location="http://172.20.153.114:8080/WholesalerWebDemo/UpdateService" />
 		</wsdl:port>
 	</wsdl:service>
 </wsdl:definitions>
